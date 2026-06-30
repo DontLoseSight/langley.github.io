@@ -1,0 +1,19 @@
+title: Trevor Langley
+email: tlangley@mit.edu
+description: Mechanical engineering student at MIT.
+baseurl: ""
+url: "https://trevorlangley.github.io"
+
+author: Trevor Langley
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+permalink: /blog/:year/:month/:day/:title/
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor

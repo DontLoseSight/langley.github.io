@@ -216,6 +216,13 @@ li {
   }
 }
 
+/* Albums counter */
+.albums-counter {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-top: 0.25rem;
+}
+
 /* Album controls (search + sort) */
 .album-controls {
   display: flex;

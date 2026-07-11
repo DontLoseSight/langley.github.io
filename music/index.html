@@ -63,6 +63,8 @@ permalink: /music/
     items.forEach(item => list.appendChild(item));
   }
 
+  sortItems(currentSort);
+
   sortBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       sortBtns.forEach(b => b.classList.remove('active'));

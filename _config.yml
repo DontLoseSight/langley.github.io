@@ -10,6 +10,11 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
+collections:
+  albums:
+    output: true
+    permalink: /music/:name/
+
 permalink: /blog/:year/:month/:day/:title/
 
 exclude:

@@ -1,0 +1,30 @@
+---
+layout: default
+---
+<article>
+  <div class="album-header">
+    <div class="album-header-info">
+      <h1>{{ page.title }}</h1>
+      <p class="album-subtitle">{{ page.artist }}{% if page.year %} · {{ page.year }}{% endif %}</p>
+      <div class="album-rating-large">{{ page.rating }}<span> / 10</span></div>
+      {% if page.favorite_track %}<p class="album-favorite-track">Favorite track: {{ page.favorite_track }}</p>{% endif %}
+      <time class="album-review-date">{{ page.date | date: "%B %-d, %Y" }}</time>
+    </div>
+  </div>
+
+  {% if page.written_review %}
+  <div class="album-body">
+    {{ content }}
+  </div>
+  {% endif %}
+
+  {% if page.apple_music_url %}
+  <div class="apple-music-embed">
+    <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+            frameborder="0"
+            height="450"
+            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+            src="{{ page.apple_music_url | replace: 'music.apple.com', 'embed.music.apple.com' }}"></iframe>
+  </div>
+  {% endif %}
+</article>

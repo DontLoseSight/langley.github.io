@@ -1,0 +1,79 @@
+---
+layout: page
+title: Music
+permalink: /music/
+---
+
+<p>I wanted a place to keep track of all the albums I like. The ratings are just for fun. Some might even have written reviews.</p>
+
+<div class="album-controls">
+  <input type="search" id="album-search" class="album-search" placeholder="Search albums or artists…" autocomplete="off">
+  <div class="sort-toggle">
+    <button class="sort-btn active" data-sort="date">Recent</button>
+    <button class="sort-btn" data-sort="rating">Rating</button>
+  </div>
+</div>
+
+<ul class="album-list" id="album-list">
+  {% assign sorted_albums = site.albums | sort: 'date' | reverse %}
+  {% for album in sorted_albums %}
+  <li data-search="{{ album.title | downcase }} {{ album.artist | downcase }}"
+      data-rating="{{ album.rating }}"
+      data-release-date="{{ album.release_date }}">
+    {% if album.cover %}
+    <a href="{{ album.url | relative_url }}">
+      <img class="album-cover-small" src="{{ album.cover | relative_url }}" alt="{{ album.title }} cover art">
+    </a>
+    {% endif %}
+    <div class="album-meta">
+      <div class="album-title-row">
+        <a class="album-title-link" href="{{ album.url | relative_url }}">{{ album.title }}</a>
+        {% if album.written_review %}<span class="written-review-tag">written review</span>{% endif %}
+      </div>
+      <p class="album-artist-year">{{ album.artist }}{% if album.year %} · {{ album.year }}{% endif %}</p>
+      {% if album.favorite_track %}<p class="album-favorite-track-index"><span class="track-label">Favorite Track</span> {{ album.favorite_track }}</p>{% endif %}
+      {% if album.blurb %}<p class="album-blurb">{{ album.blurb }}</p>{% endif %}
+    </div>
+    <div class="album-rating-badge">{{ album.rating }}<span> / 10</span></div>
+  </li>
+  {% endfor %}
+</ul>
+
+<script>
+  const search = document.getElementById('album-search');
+  const list = document.getElementById('album-list');
+  const sortBtns = document.querySelectorAll('.sort-btn');
+  let currentSort = 'date';
+
+  function getItems() {
+    return Array.from(list.querySelectorAll('li'));
+  }
+
+  function sortItems(mode) {
+    const items = getItems();
+    items.sort((a, b) => {
+      if (mode === 'rating') {
+        return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+      } else {
+        return b.dataset.releaseDate.localeCompare(a.dataset.releaseDate);
+      }
+    });
+    items.forEach(item => list.appendChild(item));
+  }
+
+  sortBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      sortBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentSort = btn.dataset.sort;
+      sortItems(currentSort);
+    });
+  });
+
+  search.addEventListener('input', () => {
+    const query = search.value.toLowerCase().trim();
+    getItems().forEach(item => {
+      item.style.display = item.dataset.search.includes(query) ? '' : 'none';
+    });
+  });
+</script>
